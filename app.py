@@ -116,7 +116,6 @@ st.markdown('<div class="subtitle">Predict insurance cost using Machine Learning
 # ---------------- NAVBAR ---------------- #
 st.markdown("""
 <div class="navbar">
-    <div class="nav-item">📊 Dataset</div>
     <div class="nav-item">🤖 Models</div>
     <div class="nav-item">📈 Visuals</div>
     <div class="nav-item">📌 Insights</div>
@@ -147,18 +146,13 @@ region_enc = region_map[region]
 input_data = np.array([[age, gender_enc, bmi, bp, diabetic_enc, children, smoker_enc, region_enc]])
 
 # ---------------- TABS ---------------- #
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Dataset", "🤖 Models", "📈 Visuals", "📌 Insights"])
-
-# ---------------- DATASET TAB ---------------- #
-with tab1:
-    st.subheader("📊 Dataset Overview")
-    st.dataframe(df.head())
+tab1, tab2, tab3 = st.tabs(["🤖 Models", "📈 Visuals", "📌 Insights"])
 
 # ---------------- MODEL TAB ---------------- #
-with tab2:
+with tab1:
     st.subheader("🤖 Model Prediction")
 
-    if st.button("🚀 Predict Cost"):
+    if st.button("🚀 Predict Insurance Cost", use_container_width=True):
         rf_pred = rf_model.predict(input_data)[0]
         lr_pred = lr_model.predict(input_data)[0]
         avg = (rf_pred + lr_pred) / 2
@@ -170,7 +164,7 @@ with tab2:
         col3.markdown(f'<div class="card"><div class="small">AI Average</div><div class="metric">${avg:.2f}</div></div>', unsafe_allow_html=True)
 
 # ---------------- VISUAL TAB ---------------- #
-with tab3:
+with tab2:
     st.subheader("📈 Data Visualization")
 
     col1, col2 = st.columns(2)
@@ -186,7 +180,7 @@ with tab3:
         st.pyplot(fig)
 
 # ---------------- INSIGHTS TAB ---------------- #
-with tab4:
+with tab3:
     st.subheader("📌 Correlation & Insights")
 
     fig, ax = plt.subplots(figsize=(10,5))
